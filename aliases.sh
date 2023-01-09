@@ -2,6 +2,7 @@
 echo ~HELLO ALIASES~
 
 alias ll="ls -la"
+alias pp="ping 8.8.8.8"
 alias br='git br | grep \*'
 alias glg='git log --graph --oneline --all'
 alias python='python3'
@@ -18,7 +19,7 @@ function dexec {
   NUMBER_OF_LINES=$(echo "$PS" | wc -l)
   if [ $NUMBER_OF_LINES = "1" ]; then
     C_ID=$(echo "$PS" | sed -E 's/^([0-9a-f]+)(.*)/\1/')
-    docker exec -it "$C_ID" bash
+    docker exec -it "$C_ID" "${@:2}"
   else
     echo "found multiple containers:"
     echo "$PS"
