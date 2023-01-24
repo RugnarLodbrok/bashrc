@@ -10,7 +10,7 @@ declare -a files=(
 )
 
 for FILE in "${files[@]}"; do
-  if [ -f "$FILE" ]; then
+  if [ -f "$HOME/.bash/$FILE" ]; then
     . ~/.bash/${FILE}
   fi
 done
