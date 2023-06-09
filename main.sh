@@ -4,6 +4,7 @@ echo ~HELLO BASH_MAIN~
 declare -a files=(
   "settings.sh"
   "aliases.sh"
+  "scripts.sh"
   "path.sh"
   "keys.sh"
   "git-completion.sh"
