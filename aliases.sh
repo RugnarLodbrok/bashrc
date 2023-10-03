@@ -26,6 +26,7 @@ alias ddown='docker-compose down'
 alias dup='docker-compose up'
 alias drop_first_line='tail -n +2'
 
+alias dpauth='dp auth login g.usatenko'
 alias kaqa='dp auth configure-kubeconfig --cluster-name ya-ruc1-dev1.dev --account-name g.usatenko@tinkoff.ru'
 alias kaprod='dp auth configure-kubeconfig --cluster-name ds-prod2.prod --account-name g.usatenko@tinkoff.ru'
 alias kaprod_m1='dp auth configure-kubeconfig --cluster-name m1-prod2.prod --account-name g.usatenko@tinkoff.ru'
@@ -68,7 +69,7 @@ function dkill {
   if [[ "$C_ID" != "" ]]; then
     docker kill "$C_ID"
   else
-    exit 1
+    return 1
   fi
 }
 
