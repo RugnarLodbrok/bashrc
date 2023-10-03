@@ -2,11 +2,14 @@
 echo ~HELLO BASH_MAIN~
 
 declare -a files=(
+  "keys.sh"
+  "common.sh"
   "settings.sh"
   "aliases.sh"
   "scripts.sh"
   "path.sh"
-  "keys.sh"
+  "docker.sh"
+  "kube.sh"
   "git-completion.sh"
 )
 

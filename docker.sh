@@ -1,0 +1,69 @@
+#!/bin/bash
+
+function filter_docker_ps_old {
+  PS=$(docker ps)
+  PS=$(echo "$PS" | grep -E "$1")
+  NUMBER_OF_LINES=$(echo "$PS" | wc -l)
+  if [ $NUMBER_OF_LINES = "1" ]; then
+    C_ID=$(echo "$PS" | sed -E 's/^([0-9a-f]+)(.*)/\1/')
+    echo $C_ID
+  else
+    echo "found multiple containers:" >&2
+    echo "$PS" >&2
+    exit 1
+  fi
+}
+
+function find_docker_container {
+  LINE=$(docker ps | find_entity "$1") || return 1
+  C_ID=$(echo "$LINE" | sed -E 's/^([0-9a-f]+)(.*)/\1/')
+  echo "$C_ID"
+}
+
+function dkill {
+  C_ID=$(find_docker_container "$1") || return 1
+  if [[ -z $C_ID ]]; then
+    return 1
+  else
+    echo kill "$C_ID"
+  fi
+}
+
+function dexec {
+  C_ID=$(find_docker_container "$1") || return 1
+  docker exec -it "$C_ID" "${@:2}"
+}
+
+function dexec-it {
+  C_ID=$(find_docker_container "$1") || return 1
+  docker exec -it "$C_ID" "${@:2}"
+}
+
+function docker-rm-all-containers {
+  function do_containers_if_any() {
+    OPERATION=$1
+    VALID_OPERATIONS=("kill" "rm")
+    BASH_C="contains '$OPERATION' \$@"
+    echo "${VALID_OPERATIONS[@]}" | xargs bash -c "$BASH_C" _ || {
+      echo bad option "$OPERATION"
+      return 1
+    }
+    C_IDS=$(</dev/stdin)
+    if [[ -n $C_IDS ]]; then
+      echo "$C_IDS" | xargs docker "$OPERATION"
+    fi
+  }
+
+  docker ps -q | xargs | do_containers_if_any kill
+  docker ps -aq | xargs | do_containers_if_any rm
+}
+
+function update_project_docker_image {
+  PREFIX="docker-hosted.artifactory.tcsbank.ru/tmsg"
+  docker pull "$PREFIX/${1}-dev:latest" &&
+    docker tag "$PREFIX/${1}-dev:latest" "${1}_dev:latest"
+}
+function docker-login-artifactory() {
+  dp auth login
+  dp auth configure-docker
+}
