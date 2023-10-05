@@ -24,7 +24,6 @@ contains() {
   for e; do [[ $e == "$match" ]] && return 0; done
   return 1
 }
-export -f contains
 
 function if_gt_then {
   STDIN=$(cat -)
@@ -33,4 +32,35 @@ function if_gt_then {
   else
     echo less
   fi
+}
+
+enumerate_args() {
+  local index=1
+  for arg in "$@"; do
+    echo "Argument $index: $arg"
+    ((index++))
+  done
+}
+
+is_function() {
+  if [[ $(type -t "${1?ensure_is_a_function: provide a command}") == "function" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+function xargs2 {
+  if is_function "$1"; then
+    export -f "${1?}" # so subprocess bash can see it
+  else
+    echo "xargs2: use xargs" >&2
+    return 1
+  fi
+  ARGS=$(printf "%q " "$@") # escape
+  cat </dev/stdin | xargs bash -c "$ARGS \$@" _
+}
+
+function my_echo() {
+    echo "$@"
 }

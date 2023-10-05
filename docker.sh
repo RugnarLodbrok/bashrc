@@ -43,8 +43,7 @@ function docker-rm-all-containers {
   function do_containers_if_any() {
     OPERATION=$1
     VALID_OPERATIONS=("kill" "rm")
-    BASH_C="contains '$OPERATION' \$@"
-    echo "${VALID_OPERATIONS[@]}" | xargs bash -c "$BASH_C" _ || {
+    echo "${VALID_OPERATIONS[@]}" | xargs2 contains "$OPERATION" || {
       echo bad option "$OPERATION"
       return 1
     }
