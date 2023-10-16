@@ -25,7 +25,7 @@ function dkill {
   if [[ -z $C_ID ]]; then
     return 1
   else
-    echo kill "$C_ID"
+    docker stop -t 5 "$C_ID" || docker kill "$C_ID"
   fi
 }
 
