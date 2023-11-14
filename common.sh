@@ -1,7 +1,6 @@
 #!/bin/bash
 
 function find_entity {
-  #  param1
   INPUT=$(</dev/stdin)
   DATA=$(echo "$INPUT" | grep -E "$1")
   NUMBER_OF_LINES=$(echo "$DATA" | wc -l | xargs) # xargs for strip

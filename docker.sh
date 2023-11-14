@@ -1,5 +1,9 @@
 #!/bin/bash
 
+alias drun='docker-compose run --service-ports'
+alias ddown='docker-compose down'
+alias dup='docker-compose up'
+
 function filter_docker_ps_old {
   PS=$(docker ps)
   PS=$(echo "$PS" | grep -E "$1")
@@ -59,8 +63,8 @@ function docker-rm-all-containers {
 
 function update_project_docker_image {
   PREFIX="docker-hosted.artifactory.tcsbank.ru/tmsg"
-  docker pull "$PREFIX/${1}-dev:latest" &&
-    docker tag "$PREFIX/${1}-dev:latest" "${1}_dev:latest"
+  docker pull "$PREFIX/${1}-dev:latest" || return 1
+  docker tag "$PREFIX/${1}-dev:latest" "${1}_dev:latest" || return 1
 }
 function docker-login-artifactory() {
   dp auth login

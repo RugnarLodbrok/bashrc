@@ -20,14 +20,12 @@ alias pip='python -m pip'
 alias colima_start='sudo echo starting colima &&
                     colima start --cpu 6 --memory 8 --disk 200 --mount $HOME:w &&
                     sudo ln -s $HOME/.colima/docker.sock /var/run/docker.sock'
+alias check_disk='stat /Users/g.usatenko/Library/Caches/JetBrains/PyCharm2022.3/python_packages/packages_v2.json'
 
-# todo move docker stuff to a separate file
-alias drun='docker-compose run --service-ports'
-alias ddown='docker-compose down'
-alias dup='docker-compose up'
 alias drop_first_line='tail -n +2'
 
 alias va='source .venv/bin/activate'
+alias da='deactivate'
 
 #alias eval_env_file='eval $(grep -v '\''^#'\'' .env | grep -v -e '\''^$'\'' | sed -E "s/(.*)=(.*)/export \1='\''\2'\''/")'
 function eval_env_file() {
@@ -37,4 +35,16 @@ function eval_env_file() {
     FILE="$1"
   fi
   eval $(grep -v '^#' $FILE | grep -v -e '^$' | sed -E "s/(.*)=(.*)/export \1='\2'/")
+}
+
+function cwd-pythonpath {
+  # Get the current working directory
+  current_dir=$(pwd)
+
+  if [[ -z "${PYTHONPATH}" ]]; then
+    export PYTHONPATH="${current_dir}"
+  else
+    export PYTHONPATH="${PYTHONPATH}:${current_dir}"
+  fi
+  echo "Current working directory added to PYTHONPATH: ${current_dir}"
 }
