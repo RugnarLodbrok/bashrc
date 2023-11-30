@@ -48,3 +48,13 @@ function cwd-pythonpath {
   fi
   echo "Current working directory added to PYTHONPATH: ${current_dir}"
 }
+
+function ae() {
+  poetry install --all-extras || return 1
+  va || return 1
+  stat .env.local >/dev/null || return 1
+  cp -f .env.example .env || return 1
+  printf '\n' >>.env || return 1
+  cat .env.local >>.env || return 1
+  eval_env_file .env.local || return 1
+}
