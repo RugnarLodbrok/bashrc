@@ -75,5 +75,5 @@ function ae() {
   cp -f .env.example .env || return 1
   printf '\n' >>.env || return 1
   cat .env.local >>.env || return 1
-  eval_env_file .env.local || return 1
+  eval_env_file .env || return 1
 }
