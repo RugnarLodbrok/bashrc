@@ -14,7 +14,8 @@ declare -a files=(
 )
 
 for FILE in "${files[@]}"; do
-  if [ -f "$HOME/.bash/$FILE" ]; then
-    . ~/.bash/${FILE}
+  F="$HOME/.bash/$FILE"
+  if [ -f "$F" ]; then
+    . "$F"
   fi
 done

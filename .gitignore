@@ -1,2 +1,4 @@
 .idea
 keys
+keys.sh
+.alias-ci-ignore-branch
