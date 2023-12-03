@@ -9,7 +9,7 @@ function ci() {
 
   FLAG_FILE='.alias-ci-ignore-branch'
   if [[ -f "$FLAG_FILE" ]]; then
-      git ci -m "${message}"
+    git ci -m "${message}"
   else
     current_branch=$(git rev-parse --abbrev-ref HEAD)
     ticket_number=$(echo $current_branch | grep -oE 'TMSG-[0-9]+')
@@ -20,4 +20,16 @@ function ci() {
       return 1
     fi
   fi
+}
+
+function kill_nsurlsessiond() {
+  while true; do
+    killall nsurlsessiond 2>/dev/null &&
+      echo "nsurlsessiond killed at $(date)" ||
+      (
+        echo -n "not found at $(date)" &&
+          echo -ne "\r" &&
+          sleep 20
+      )
+  done
 }
