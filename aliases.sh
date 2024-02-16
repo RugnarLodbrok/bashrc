@@ -3,8 +3,13 @@ echo ~HELLO ALIASES~
 
 alias ll="ls -la"
 alias pp="ping 8.8.8.8"
+
+# GIT
 alias br='git br | grep \*'
 alias glg='git log --graph --oneline --all'
+alias pull='git stash && git pull && git stash pop'
+alias pull_fork='git co master && git fetch upstream master && git rebase upstream/master'
+
 alias python39='/usr/bin/python3'
 alias python='python3.11'
 alias py='python'
@@ -61,9 +66,9 @@ function create_env_local() {
   fi
   stat $SRC >/dev/null || return 1
 
+  echo "COMPOSE_FILE=$COMPOSE_LOCAL" >>$DST
   cat $SRC | grep postgres | sed 's/@postgres/@localhost/g' >>$DST
   cat $SRC | grep REDIS_CLUSTER | sed 's/redis-cluster:/localhost:/g' >>$DST
-
 }
 
 function ae() {
