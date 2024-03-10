@@ -58,3 +58,8 @@ function ae() {
   cat .env.local >>.env || return 1
   eval_env_file .env.local || return 1
 }
+
+function pip-uninstall-all {
+  packages=$(pip list 2>/dev/null | drop_first_line | drop_first_line | grep -v pip | grep -v setuptools | sed -E 's/([^ '$'\t'']+)[ \t]+.*/\1/')
+  echo "$packages" | xargs echo pip uninstall -y
+}
