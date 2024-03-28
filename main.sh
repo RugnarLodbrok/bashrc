@@ -10,6 +10,7 @@ declare -a files=(
   "path.sh"
   "docker.sh"
   "kube.sh"
+  "git.sh"
   "git-completion.sh"
 )
 
