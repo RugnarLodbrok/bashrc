@@ -1,6 +1,6 @@
 #!/bin/bash
 
-alias drun='docker-compose run --service-ports'
+alias drun='docker-compose run --rm --service-ports'
 alias ddown='docker-compose down'
 alias dup='docker-compose up'
 

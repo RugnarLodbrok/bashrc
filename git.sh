@@ -2,6 +2,7 @@
 
 alias br='git br | grep \*'
 alias glg='git log --graph --oneline --all'
+alias glg1='git log --graph --oneline'
 alias pull='git stash && git pull && git stash pop'
 alias pull_fork='git co master && git fetch upstream master && git rebase upstream/master'
 
