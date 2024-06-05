@@ -29,19 +29,13 @@ function totp() {
 #  - Для входа в через ADFS использовать пароль от учетки
 #  - вместо смс можно использовать <otp>
 
-  STATIC_PIN=$VPN_TOTP_PIN
-  SECRET=$VPN_TOTP_SECRET
-
-  OTP=$(oathtool --totp -b "$SECRET")
-
-  # Copy the combined password to clipboard
-  echo -n "${STATIC_PIN}${OTP}" | tee >(pbcopy)
+  OTP=$(oathtool --totp -b "$VPN_TOTP_SECRET")
+  echo -n "${VPN_TOTP_PIN}${OTP}" | tee >(pbcopy)
   echo ''
 }
 
 function totp-wiki() {
-    SECRET=$ADFS_TOTP_SECRET
-    OTP=$(oathtool --totp -b "$SECRET")
+    OTP=$(oathtool --totp -b "$ADFS_TOTP_SECRET")
     echo -n "${OTP}" | tee >(pbcopy)
     echo ''
 }
