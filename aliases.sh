@@ -23,11 +23,14 @@ alias colima_start='sudo echo starting colima &&
                     colima start --cpu 6 --memory 8 --disk 200 --mount $HOME:w &&
                     sudo ln -s $HOME/.colima/docker.sock /var/run/docker.sock'
 alias check_disk='stat /Users/g.usatenko/Library/Caches/JetBrains/PyCharm2022.3/python_packages/packages_v2.json'
+# use ncdu
+# ncdu /System/ - also includes home directory
 
 alias drop_first_line='tail -n +2'
 
 alias va='source .venv/bin/activate'
 alias da='deactivate'
+alias poetry_clear_cache='poetry cache clear --all .'
 
 #alias eval_env_file='eval $(grep -v '\''^#'\'' .env | grep -v -e '\''^$'\'' | sed -E "s/(.*)=(.*)/export \1='\''\2'\''/")'
 function eval_env_file() {
