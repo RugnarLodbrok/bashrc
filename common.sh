@@ -17,6 +17,7 @@ function _find_entity_helper {
   fi
 }
 
+
 function find_entity {
   INPUT=$(</dev/stdin)
   DATA=$INPUT
@@ -38,13 +39,13 @@ function find_entity {
   _find_entity_helper "$DATA" || return 1
 }
 
+
 contains() {
   local e match="$1"
   shift
   for e; do [[ $e == "$match" ]] && return 0; done
   return 1
 }
-
 
 
 is_function() {
@@ -54,6 +55,7 @@ is_function() {
     return 1
   fi
 }
+
 
 function xargs2 {
   if is_function "$1"; then
