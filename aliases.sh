@@ -5,6 +5,8 @@ alias ll="ls -la"
 alias pp="ping 8.8.8.8"
 
 alias ssh-terminal-farm="ssh s_g.usatenko@tmsg-api-dev.term.tcsbank.ru"
+# time: ~freeipa_ask ~help-lunux-farm
+
 alias python39='/usr/bin/python3'
 alias python='python3.11'
 alias py='python'

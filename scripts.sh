@@ -34,7 +34,7 @@ function totp() {
   echo ''
 }
 
-function totp-wiki() {
+function totp-adfs() {
     OTP=$(oathtool --totp -b "$ADFS_TOTP_SECRET")
     echo -n "${OTP}" | tee >(pbcopy)
     echo ''

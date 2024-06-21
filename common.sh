@@ -1,8 +1,7 @@
 #!/bin/bash
 
-function find_entity {
-  INPUT=$(</dev/stdin)
-  DATA=$(echo "$INPUT" | grep -E "$1")
+function find_entity_helper {
+  DATA=$1
   NUMBER_OF_LINES=$(echo "$DATA" | wc -l | xargs) # xargs for strip
   if [[ -z $DATA ]]; then
     echo "no entities found" >&2
@@ -11,6 +10,32 @@ function find_entity {
   if [[ $NUMBER_OF_LINES == 1 ]]; then
     echo "$DATA"
   else
+    echo "found multiple entities:" >&2
+    echo "$DATA" >&2
+    return 1
+  fi
+}
+
+function find_entity {
+  INPUT=$(</dev/stdin)
+  DATA=$(echo "$INPUT" | grep -E "$1")
+  DATA_FALLBACK=$(echo "$INPUT" | grep -E "$1"'$')
+  NUMBER_OF_LINES=$(echo "$DATA" | wc -l | xargs) # xargs for strip
+  NUMBER_OF_LINES_FALLBACK=$(echo "$DATA_FALLBACK" | wc -l | xargs)
+  if [[ -z $DATA ]]; then
+    echo "no entities found" >&2
+    return 1
+  fi
+  if [[ $NUMBER_OF_LINES == 1 ]]; then
+    echo "$DATA"
+  else
+    if [[ ! -z $DATA_FALLBACK ]]; then
+      if [[ $NUMBER_OF_LINES_FALLBACK == 1 ]]; then
+        echo "$DATA_FALLBACK"
+        return 0
+      fi
+      DATA=$DATA_FALLBACK
+    fi
     echo "found multiple entities:" >&2
     echo "$DATA" >&2
     return 1
