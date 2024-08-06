@@ -21,9 +21,9 @@ function _find_entity_helper {
 function find_entity {
   INPUT=$(</dev/stdin)
   DATA=$INPUT
+
   ARG=$1
   shift
-
   for NEXT_ARG in "$@"; do
     DATA=$(echo "$DATA" | grep -E "$ARG")
     ARG=$NEXT_ARG
