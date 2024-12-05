@@ -12,6 +12,7 @@ function _find_entity_helper {
     echo "$DATA"
   else
     echo "found multiple entities:" >&2
+    echo "" >&2
     echo "$DATA" >&2
     return 1
   fi
