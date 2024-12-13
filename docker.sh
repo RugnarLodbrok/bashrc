@@ -5,9 +5,9 @@ alias ddown='docker-compose down'
 alias dup='docker-compose up'
 
 function filter_docker_ps_old {
-  PS=$(docker ps)
+  local PS=$(docker ps)
   PS=$(echo "$PS" | grep -E "$1")
-  NUMBER_OF_LINES=$(echo "$PS" | wc -l)
+  local NUMBER_OF_LINES=$(echo "$PS" | wc -l)
   if [ $NUMBER_OF_LINES = "1" ]; then
     C_ID=$(echo "$PS" | sed -E 's/^([0-9a-f]+)(.*)/\1/')
     echo $C_ID
@@ -19,13 +19,13 @@ function filter_docker_ps_old {
 }
 
 function find_docker_container {
-  LINE=$(docker ps | find_entity "$1") || return 1
-  C_ID=$(echo "$LINE" | sed -E 's/^([0-9a-f]+)(.*)/\1/')
+  local LINE=$(docker ps | find_entity "$1") || return 1
+  local C_ID=$(echo "$LINE" | sed -E 's/^([0-9a-f]+)(.*)/\1/')
   echo "$C_ID"
 }
 
 function dkill {
-  C_ID=$(find_docker_container "$1") || return 1
+  local C_ID=$(find_docker_container "$1") || return 1
   if [[ -z $C_ID ]]; then
     return 1
   else
@@ -34,24 +34,24 @@ function dkill {
 }
 
 function dexec {
-  C_ID=$(find_docker_container "$1") || return 1
+  local C_ID=$(find_docker_container "$1") || return 1
   docker exec -it "$C_ID" "${@:2}"
 }
 
 function dexec-it {
-  C_ID=$(find_docker_container "$1") || return 1
+  local C_ID=$(find_docker_container "$1") || return 1
   docker exec -it "$C_ID" "${@:2}"
 }
 
 function docker-rm-all-containers {
   function do_containers_if_any() {
-    OPERATION=$1
-    VALID_OPERATIONS=("kill" "rm")
+    local OPERATION=$1
+    local VALID_OPERATIONS=("kill" "rm")
     echo "${VALID_OPERATIONS[@]}" | xargs2 contains "$OPERATION" || {
       echo bad option "$OPERATION"
       return 1
     }
-    C_IDS=$(</dev/stdin)
+    local C_IDS=$(</dev/stdin)
     if [[ -n $C_IDS ]]; then
       echo "$C_IDS" | xargs docker "$OPERATION"
     fi
@@ -62,10 +62,11 @@ function docker-rm-all-containers {
 }
 
 function update_project_docker_image {
-  PREFIX="docker-hosted.artifactory.tcsbank.ru/tmsg"
+  local PREFIX="docker-hosted.artifactory.tcsbank.ru/tmsg"
   docker pull "$PREFIX/${1}-dev:latest" || return 1
   docker tag "$PREFIX/${1}-dev:latest" "${1}_dev:latest" || return 1
 }
+
 function docker-login-artifactory() {
   dp auth login
   dp auth configure-docker
