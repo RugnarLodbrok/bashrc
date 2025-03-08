@@ -67,3 +67,15 @@ function xargs2 {
   ARGS=$(printf "%q " "$@") # escape
   cat </dev/stdin | xargs bash -c "$ARGS \$@" _
 }
+
+
+function safe_base64() {
+  # Implements URL-safe base64 of stdin, stripping trailing = chars.
+  # Writes result to stdout.
+  # TODO: this gives the following errors on Mac:
+  #   base64: invalid option -- w
+  #   tr: illegal option -- -
+  local url_safe
+  url_safe="$(base64 -w 0 - | tr '/+' '_-')"
+  echo -n "${url_safe%%=*}"  # Strip trailing = chars
+}
