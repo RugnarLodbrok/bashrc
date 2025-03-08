@@ -6,10 +6,11 @@ function k-activate-cluster() {
     dp auth configure-kubeconfig --cluster-name "${CLUSTER}" --account-name "$ME"@tinkoff.ru
 }
 
-alias k-activate-cluster-qa='k-activate-cluster ya-ruc1-dev1.dev'
-alias k-activate-cluster-prod='k-activate-cluster ds-prod2.prod'
-alias k-activate-cluster-prod-m1='k-activate-cluster m1-prod2.prod'
-alias k-activate-cluster-prod-m2='k-activate-cluster ix-m2-prod2.prod'
+# `kubectl config view` to see where cluster names come from
+alias kc-qa='k-activate-cluster ya-ruc1-dev1.dev'
+alias kc-ds='k-activate-cluster ds-prod2.prod'
+alias kc-m1='k-activate-cluster m1-prod2.prod'
+alias kc-ix='k-activate-cluster ix-m2-prod2.prod'
 
 alias k='kubectl'
 
@@ -19,3 +20,41 @@ function k-activate-ns() {
 }
 
 alias kan='k-activate-ns'
+
+function k-get-pods-image() {
+  pattern="$1"
+  if [[ -z $pattern ]]; then
+    echo "usage: k-get-pod-image <pattern>" >&2
+    return 1
+  fi
+
+  k get pods -o custom-columns=NAME:.metadata.name | grep $pattern | while read -r line; do
+    image=$(k get pod $line -o jsonpath='{.spec.containers[*].image}')
+    echo $line "    " $image
+  done
+}
+
+function klogs() {
+  pattern=$1
+  shift
+  if [[ -z $pattern ]]; then
+    echo "usage: k-get-pod-image <pattern>" >&2
+    return 1
+  fi
+
+  pod=$(k get po -o=custom-columns=NAME:.metadata.name | find_entity "$pattern") || return 1
+  k logs $pod "$@"
+}
+
+function k-get-deployment-config() {
+  pattern="$1"
+  shift
+  if [[ -z $pattern ]]; then
+    echo "usage: k-get-pod-image <pattern>" >&2
+    return 1
+  fi
+  deployment=$(k get deployment -o=custom-columns=NAME:.metadata.name | find_entity "$pattern") || return 1
+  config_map=$(k get deployment "$deployment" -o jsonpath="{.spec.template.spec.containers[*].envFrom[*].configMapRef.name}")
+
+  k get configmap "$config_map" -o yaml
+}

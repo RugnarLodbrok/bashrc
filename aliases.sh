@@ -6,6 +6,10 @@ alias pp="ping 8.8.8.8"
 alias untar='tart -zxfv'
 alias grepi='grep -i'
 alias grepv='grep -v'
+alias g='git'
+
+alias how-to-kuber-restart='echo kubectl rollout restart deployment your_deployment_name'
+
 
 alias py='python'
 alias py='
@@ -25,7 +29,7 @@ alias drop_first_line='tail -n +2'
 
 alias va='source .venv/bin/activate'
 alias da='deactivate'
-alias pfg='pip freeze | grep -i '
+alias pfg='pip freeze | grep -i'
 alias poetry_clear_cache='poetry cache clear --all .'
 
 #alias eval_env_file='eval $(grep -v '\''^#'\'' .env | grep -v -e '\''^$'\'' | sed -E "s/(.*)=(.*)/export \1='\''\2'\''/")'
