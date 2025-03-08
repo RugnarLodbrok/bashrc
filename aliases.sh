@@ -9,6 +9,7 @@ alias grepv='grep -v'
 alias g='git'
 
 alias how-to-kuber-restart='echo kubectl rollout restart deployment your_deployment_name'
+alias how-to-generate-ssh='echo ssh-keygen -t rsa -b 4096 -C "your_email@example.com"'
 
 
 alias py='python'
