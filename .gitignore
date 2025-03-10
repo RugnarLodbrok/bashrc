@@ -3,3 +3,4 @@ keys
 keys*
 keys.sh
 .alias-ci-ignore-branch
+non-commit.sh

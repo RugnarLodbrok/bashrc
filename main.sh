@@ -1,22 +1,13 @@
 #!/bin/bash
 echo ~HELLO BASH_MAIN~
+PREFIX="$HOME/.bash"
+pushd $PREFIX
 
-declare -a files=(
-  "keys.sh"
-  "common.sh"
-  "settings.sh"
-  "aliases.sh"
-  "scripts.sh"
-  "path.sh"
-  "docker.sh"
-  "kube.sh"
-  "git.sh"
-  "git-completion.sh"
-)
-
-for FILE in "${files[@]}"; do
-  F="$HOME/.bash/$FILE"
-  if [ -f "$F" ]; then
-    . "$F"
-  fi
+for FILE in *.sh; do
+  [ "$FILE" != "main.sh" ] || continue
+  echo include $FILE
+  F="$PREFIX/$FILE"
+  . "$FILE"
 done
+
+popd
