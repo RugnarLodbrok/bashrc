@@ -1,17 +1,21 @@
 #!/bin/bash
 
+function echo_error() {
+    echo $'\e[31;1m'"$@"$'\e[0m' >&2
+}
+
 function _find_entity_helper {
-  DATA=$1
-  NUMBER_OF_LINES=$(echo "$DATA" | wc -l | xargs) # xargs for strip
+  local DATA=$1
+  local NUMBER_OF_LINES=$(echo "$DATA" | wc -l | xargs) # xargs for strip
 
   if [[ -z $DATA ]]; then
-    echo "no entities found" >&2
+    echo_error "no entities found"
     return 1
   fi
   if [[ $NUMBER_OF_LINES == 1 ]]; then
     echo "$DATA"
   else
-    echo "found multiple entities:" >&2
+    echo_error "found multiple entities:"
     echo "" >&2
     echo "$DATA" >&2
     return 1
@@ -20,17 +24,17 @@ function _find_entity_helper {
 
 
 function find_entity {
-  INPUT=$(</dev/stdin)
-  DATA=$INPUT
+  local INPUT=$(</dev/stdin)
+  local DATA=$INPUT
 
-  ARG=$1
+  local ARG=$1
   shift
   for NEXT_ARG in "$@"; do
     DATA=$(echo "$DATA" | grep -E "$ARG")
     ARG=$NEXT_ARG
   done
 
-  DATA_FALLBACK=$(echo "$DATA" | grep -E "$ARG"'$')
+  local DATA_FALLBACK=$(echo "$DATA" | grep -E "$ARG"'$')
   DATA=$(echo "$DATA" | grep -E "$ARG")
 
   if [[ ! -z "$DATA_FALLBACK" ]]; then
