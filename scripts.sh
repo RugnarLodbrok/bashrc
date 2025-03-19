@@ -57,6 +57,11 @@ function totp-adfs() {
     echo -n "${OTP}" | tee >(pbcopy)
     echo ''
 }
+function totp-adfs2() {
+    OTP=$(oathtool --totp -b "$ADFS_TOTP_SECRET2")
+    echo -n "${OTP}" | tee >(pbcopy)
+    echo ''
+}
 
 function tvpn () {
   BIN=/opt/cisco/anyconnect/bin/vpn
