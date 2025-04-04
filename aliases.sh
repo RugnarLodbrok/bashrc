@@ -8,6 +8,16 @@ alias grepi='grep -i'
 alias grepv='grep -v'
 alias ffmp='ffmpeg -hide_banner'
 alias yt-dlp-best='yt-dlp -f bestvideo+bestaudio/best'
+alias g='git'
+
+alias how-to-kuber-restart='echo kubectl rollout restart deployment your_deployment_name'
+alias how-to-generate-ssh='echo ssh-keygen -t rsa -b 4096 -C "your_email@example.com"'
+alias how-to-truenas-enable-apt='/usr/local/libexec/disable-rootfs-protection'
+alias how-to-git-aliases='echo git config --global alias.co checkout
+echo git config --global alias.br branch
+echo git config --global alias.ci commit
+echo git config --global alias.st status'
+
 
 alias py='python'
 alias py='
@@ -27,7 +37,7 @@ alias drop_first_line='tail -n +2'
 
 alias va='source .venv/bin/activate'
 alias da='deactivate'
-alias pfg='pip freeze | grep -i '
+alias pfg='pip freeze | grep -i'
 alias poetry_clear_cache='poetry cache clear --all .'
 
 #alias eval_env_file='eval $(grep -v '\''^#'\'' .env | grep -v -e '\''^$'\'' | sed -E "s/(.*)=(.*)/export \1='\''\2'\''/")'

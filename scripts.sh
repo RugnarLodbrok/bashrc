@@ -12,6 +12,24 @@ function kill_nsurlsessiond() {
   done
 }
 
+function clickhouse-client-parse-string()
+{
+  url=$1
+  if [[ $url =~ clickhouse://([^:]+):([^@]+)@([^:]+):([0-9]+)/(.+) ]]; then
+      user="${BASH_REMATCH[1]}"
+      password="${BASH_REMATCH[2]}"
+      host="${BASH_REMATCH[3]}"
+      port="${BASH_REMATCH[4]}"
+      db_name="${BASH_REMATCH[5]}"
+
+      echo clickhouse-client --host="${host}" --port=${port} --user=${user} --password=${password} --database=${db_name}
+
+  else
+      echo "The URL did not match the expected format." >&2
+      return 1
+  fi
+}
+
 function totp() {
 #  https://wiki.tcsbank.ru/pages/viewpage.action?pageId=2904580153
 #  https://wiki.tcsbank.ru/pages/viewpage.action?pageId=2171876564
@@ -39,4 +57,25 @@ function totp-adfs() {
     echo -n "${OTP}" | tee >(pbcopy)
     echo ''
 }
-# vb.tcsbank.ru запасной впн
+function totp-adfs2() {
+    OTP=$(oathtool --totp -b "$ADFS_TOTP_SECRET2")
+    echo -n "${OTP}" | tee >(pbcopy)
+    echo ''
+}
+
+function tvpn () {
+  BIN=/opt/cisco/anyconnect/bin/vpn
+  HOST=gw-vpn.tcsbank.ru
+  echo -e "$VPN_USERNAME\n$(totp)" | $BIN -s connect $HOST
+}
+
+function tvpn2 () {
+  BIN=/opt/cisco/anyconnect/bin/vpn
+  HOST=vb.tcsbank.ru
+  echo -e "$VPN_USERNAME\n$(totp)" | $BIN -s connect $HOST
+}
+
+function tvpn-disconnect () {
+  BIN=/opt/cisco/anyconnect/bin/vpn
+  $BIN -s disconnect
+}
