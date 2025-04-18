@@ -3,9 +3,11 @@ echo ~HELLO ALIASES~
 
 alias ll="ls -la"
 alias pp="ping 8.8.8.8"
-alias untar='tart -zxfv'
+alias untar='tar -zxfv'
 alias grepi='grep -i'
 alias grepv='grep -v'
+alias ffmp='ffmpeg -hide_banner'
+alias yt-dlp-best='yt-dlp -f bestvideo+bestaudio/best'
 alias g='git'
 
 alias how-to-kuber-restart='echo kubectl rollout restart deployment your_deployment_name'
