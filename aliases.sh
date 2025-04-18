@@ -11,9 +11,9 @@ alias g='git'
 alias how-to-kuber-restart='echo kubectl rollout restart deployment your_deployment_name'
 alias how-to-generate-ssh='echo ssh-keygen -t rsa -b 4096 -C "your_email@example.com"'
 alias how-to-truenas-enable-apt='/usr/local/libexec/disable-rootfs-protection'
-alias how-to-git-aliases='echo git config --global alias.co checkout
-\&\& git config --global alias.br branch
-\&\& git config --global alias.ci commit
+alias how-to-git-aliases='echo git config --global alias.co checkout \
+\&\& git config --global alias.br branch \
+\&\& git config --global alias.ci commit \
 \&\& git config --global alias.st status'
 
 
