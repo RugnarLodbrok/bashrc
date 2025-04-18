@@ -3,9 +3,11 @@ echo ~HELLO ALIASES~
 
 alias ll="ls -la"
 alias pp="ping 8.8.8.8"
-alias untar='tart -zxfv'
+alias untar='tar -zxfv'
 alias grepi='grep -i'
 alias grepv='grep -v'
+alias ffmp='ffmpeg -hide_banner'
+alias yt-dlp-best='yt-dlp -f bestvideo+bestaudio/best'
 alias g='git'
 
 alias how-to-kuber-restart='echo kubectl rollout restart deployment your_deployment_name'
@@ -15,6 +17,10 @@ alias how-to-git-aliases='echo git config --global alias.co checkout \
 \&\& git config --global alias.br branch \
 \&\& git config --global alias.ci commit \
 \&\& git config --global alias.st status'
+alias how-to-git-aliases='echo git config --global alias.co checkout
+echo git config --global alias.br branch
+echo git config --global alias.ci commit
+echo git config --global alias.st status'
 
 
 alias py='python'
