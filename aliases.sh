@@ -21,6 +21,7 @@ alias how-to-git-aliases='echo git config --global alias.co checkout
 echo git config --global alias.br branch
 echo git config --global alias.ci commit
 echo git config --global alias.st status'
+echo how-to-zfs-check-scan-errors='echo sudo zpool status -v <pool-name>'
 
 
 alias py='python'
