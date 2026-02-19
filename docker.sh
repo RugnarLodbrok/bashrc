@@ -1,8 +1,8 @@
 #!/bin/bash
 
-alias drun='docker-compose run --rm --service-ports'
-alias ddown='docker-compose down'
-alias dup='docker-compose up'
+alias drun='docker compose run --rm --service-ports'
+alias ddown='docker compose down'
+alias dup='docker compose up'
 
 function filter_docker_ps_old {
   local PS=$(docker ps)
