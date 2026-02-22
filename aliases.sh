@@ -22,7 +22,7 @@ echo git config --global alias.br branch
 echo git config --global alias.ci commit
 echo git config --global alias.st status'
 alias how-to-zfs-check-scan-errors='echo sudo zpool status -v <pool-name>'
-alias how-to-check-open-ports='echo netstat -ano (apt install net-tools)'
+alias how-to-check-open-ports='echo '\''netstat -ano (apt install net-tools)'\'
 
 
 alias py='python'
